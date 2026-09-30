@@ -28,7 +28,7 @@
 - 투빅스(TOBIG's) 25기 — AI·빅데이터 연합 동아리, LLM 논문·멀티에이전트 스터디 (2026.01 ~ )
 - 피로그래밍(PIROGRAMMING) 23기 부원 · 24기 교육부 운영진 — Django 웹 개발, AI 활용 커리큘럼 개편 (2025.07 ~ 2026.02)
 - Synapse 2기 — AI-Insight Estate, 결(LiteRec) 프로젝트 (2025.09 ~ 2026.08)
-- 3D 딥러닝 연구실 학부연구생(Visual AI Media Lab)
+- 3D 딥러닝 연구실 학부연구생 (Visual AI Media Lab)
 
 ## Other Projects
 

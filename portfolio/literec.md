@@ -15,7 +15,7 @@
 ## 한눈에 보기
 - 문제: 별점 하나로는 "왜 좋았는지"가 전달되지 않는다. 같은 책도 독자마다 좋아한 이유가 다르다. 그래서 리뷰를 클러스터링해 책의 매력 포인트를 여러 '결'로 나누고, 사용자에게 가장 잘 맞는 결 하나를 실제 리뷰 문장과 함께 근거로 보여준다.
 - 내가 한 일: 새 리뷰가 사람 손 없이 추천에 반영되도록 CronJob 2개를 구현하고, 배포 인프라(k3s, CI/CD)와 백엔드를 맡았다.
-- 결과: CronJob 2개로 신규 리뷰 구조화(매일)와 리뷰 임베딩·클러스터링·카탈로그 재계산(매주)을 자동화했다.
+- 결과: 구조화에 실패한 리뷰도 누락되지 않고 다음 실행에서 자동으로 재시도되는 배치 구조를 만들었다.
 
 ## 주요 의사결정 / 문제 해결
 
@@ -35,6 +35,9 @@
 - 초기 리뷰 440건을 구조화한 `data/src/llm_review/` 구현을 새로 만들지 않고 그대로 재사용했다.
 
 ### 2. 배포 인프라
+
+![결 배포 인프라 다이어그램](../assets/literec-infra.svg)
+
 - 단일 EC2(t3.small) 위에 경량 Kubernetes(k3s, Traefik Ingress)로 배포했다.
 - 네임스페이스를 분리했다: `data`(PostgreSQL StatefulSet, PVC 5Gi) / `backend`(backend·frontend Deployment) / `ml`(ml-server Deployment + CronJob 2개, HF 모델 캐시 PVC 2Gi).
 - CI/CD: `main`에 push하면 GitHub Actions가 변경된 경로(`backend/**`, `ML/**`, `app/**`)만 감지해 Docker 이미지를 빌드하고 Docker Hub에 푸시한 뒤 `kubectl rollout restart`로 배포한다.
